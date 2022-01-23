@@ -1,15 +1,17 @@
 using ReusePatterns
 using Test
+using InteractiveUtils
 
-ReusePatterns._supertypes(Int)
-ReusePatterns._supertypes(String)
-ReusePatterns._supertypes(Vector)
-ReusePatterns._supertypes(Vector{String})
-ReusePatterns._supertypes(Array)
-ReusePatterns._supertypes(UnionAll)
-ReusePatterns._supertypes(Union{Type,UnionAll,DataType})
-ReusePatterns._supertypes(Tuple{Int,Int})
-
+# Evaluate _supertypes against InteractiveUtils.supertypes
+# -> InteractiveUtils.supertypes doesn't exclude Any and same type!
+@test tuple(ReusePatterns._supertypes(Int)...) === supertypes(Int)[2:end-1]
+@test tuple(ReusePatterns._supertypes(String)...) === supertypes(String)[2:end-1]
+@test tuple(ReusePatterns._supertypes(Vector)...) === supertypes(Vector)[2:end-1]
+@test tuple(ReusePatterns._supertypes(Vector{String})...) === supertypes(Vector{String})[2:end-1]
+@test tuple(ReusePatterns._supertypes(Array)...) === supertypes(Array)[2:end-1]
+@test tuple(ReusePatterns._supertypes(UnionAll)...) === supertypes(UnionAll)[2:end-1]
+@test tuple(ReusePatterns._supertypes(Union{Type,UnionAll,DataType})...) === supertypes(Union{Type,UnionAll,DataType})[2:end-1]
+@test tuple(ReusePatterns._supertypes(Tuple{Int,Int})...) === supertypes(Tuple{Int,Int})[2:end-1]
 
 @quasiabstract struct Rectangle1
     width::Real 
