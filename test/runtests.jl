@@ -1,14 +1,14 @@
 using ReusePatterns
 using Test
 
-supertypes(Int)
-supertypes(String)
-supertypes(Vector)
-supertypes(Vector{String})
-supertypes(Array)
-supertypes(UnionAll)
-supertypes(Union{Type,UnionAll,DataType})
-supertypes(Tuple{Int,Int})
+ReusePatterns._supertypes(Int)
+ReusePatterns._supertypes(String)
+ReusePatterns._supertypes(Vector)
+ReusePatterns._supertypes(Vector{String})
+ReusePatterns._supertypes(Array)
+ReusePatterns._supertypes(UnionAll)
+ReusePatterns._supertypes(Union{Type,UnionAll,DataType})
+ReusePatterns._supertypes(Tuple{Int,Int})
 
 
 @quasiabstract struct Rectangle1

@@ -5,28 +5,28 @@ using Combinatorics
 # TODO
 # - forward macro calls
 
-export supertypes, forward, @forward,
+export forward, @forward,
     @copy_fields,
     @quasiabstract, concretetype, isquasiabstract, isquasiconcrete
 
 
 """
-`supertypes(T::Type)`
+`_supertypes(T::Type)`
 
 Returns a vector with all supertypes of type `T` (excluding `Any`).
 
 # Example
 ```julia-repl
-julia> println(supertypes(Int))
+julia> println(_supertypes(Int))
 Type[Signed, Integer, Real, Number]
 ```
 """
-function supertypes(T::Type)::Vector{Type}
+function _supertypes(T::Type)::Vector{Type}
     out = Vector{Type}()
     st = supertype(T)
     if st != Any
         push!(out, st)
-        push!(out, supertypes(st)...)
+        push!(out, _supertypes(st)...)
     end
     return out
 end
@@ -156,11 +156,11 @@ end
 """
 `forward(sender::Tuple{Type,Symbol}, receiver::Type; super=true, kw...)`
 
-Wrapper for `forward(send, receiver, supertypes(receiver, super=super); kw...)`
+Wrapper for `forward(send, receiver, _supertypes(receiver, super=super); kw...)`
 """
 function forward(sender::Tuple{Type,Symbol}, receiver::Type; super=true, kw...)
     tt = [receiver]
-    (super)  &&  (append!(tt, supertypes(receiver)))
+    (super)  &&  (append!(tt, _supertypes(receiver)))
     return forward(sender, tt, methodswith(receiver, supertypes=super); kw...)
 end
 
